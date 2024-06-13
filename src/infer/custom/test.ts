@@ -1,6 +1,16 @@
-export type Capitalize<S extends string> = S extends `${infer T}${infer U}`
-  ? `${T}--${U}`
-  : never;
+import {
+  Maybe,
+  OnlyString,
+  IsArray,
+  IsIn,
+  RemoveVarCSSProp,
+  FirstAndLast,
+  GetResult,
+  NoEmptyArray,
+  ReturnOnlyStringOrNumberValue,
+  Push,
+  Reverse,
+} from "./utils";
 
 const style = {
   color: "var(--red-0)",
@@ -9,44 +19,16 @@ const style = {
 } as const;
 
 type Style = typeof style;
-type RemoveVar<T> = T extends `var(--${infer Y})` ? Y : T;
-
-export type OnlyString<S> = S extends string ? S : never;
-export type isIn<T, S> = T extends S ? true : false;
-export type isArray<T> = T extends any[] ? true : false;
-export type Maybe<T> = T | undefined | null;
-export type NoEmptyArray<T> = [T, ...T[]];
-export type RemoveVarCSSProp<T> = {
-  [K in keyof T as RemoveVar<K>]: T[K];
-};
-export type ReturnOnlyStringOrNumberValue<K extends (...args: any) => any> =
-  K extends ((...args: any) => infer R extends string | number) ? R : never;
-
-export type FirstAndLast<T extends [any, any, ...any[]]> = T extends [
-  infer F,
-  ...any[],
-  infer L
-]
-  ? [F, L]
-  : never;
-
-type GetResult<T> = T extends
-  | ((...args: any[]) => infer R)
-  | Promise<{ data: () => infer R }>
-  | Promise<{ error: () => infer R }>
-  ? R
-  : never;
 
 type S1 = OnlyString<"Helo">;
 type N1 = OnlyString<1>;
-type M = isIn<false, string | number>;
+type M = IsIn<false, string | number>;
 type num = Maybe<number>;
 type nul = Maybe<null>;
-type Arr = isArray<[]>;
-type NotArr = isArray<"hello">;
+type Arr = IsArray<[]>;
+type NotArr = IsArray<"hello">;
 type RemovedVar = RemoveVarCSSProp<Style>;
-type FL = FirstAndLast<[1, 2, 3]>;
-type FL2 = FirstAndLast<[1, 3]>;
+
 type ReturnNumber = ReturnOnlyStringOrNumberValue<() => 5>;
 type ReturnStr = ReturnOnlyStringOrNumberValue<() => "5">;
 type ReturnNever = ReturnOnlyStringOrNumberValue<() => true>;
@@ -71,3 +53,11 @@ type Result2 = GetResult<typeof result2>;
 
 type Omited = OmitFirst<[1, 2, 3]>;
 type OmitedLast = OmitLast<[1, 2, 3]>;
+type FL = FirstAndLast<[1, 2, 3]>;
+type FL2 = FirstAndLast<[1, 3]>;
+
+type P = Push<[1, 3], "4">;
+type P2 = Push<["1", "3"], "4">;
+
+type Array1 = Reverse<["a", "b", "c", "d"]>;
+type Array2 = Reverse<[1, 2, 3, 4]>;
