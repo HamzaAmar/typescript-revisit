@@ -1,13 +1,3 @@
-const getUser = () => {
-  return Promise.resolve({
-    id: '123',
-    name: 'John',
-    email: 'john@example.com',
-  });
-};
-
-type ReturnValue = Awaited<ReturnType<typeof getUser>>;
-
 interface Address {
   street: string;
   city: string;
@@ -28,7 +18,7 @@ interface History {
   totalAmount: number;
 }
 
-interface User {
+export interface User {
   id: number;
   username: string;
   password: string;
@@ -40,12 +30,3 @@ interface User {
   phoneNumber: string;
   orderHistory: History[];
 }
-
-interface ApiService {
-  getUsers: () => Promise<User[]>;
-}
-
-// To Get The user Type Even If we have it above but Only for practice Typescript we can use this
-// type Users = User[]
-
-type Users = Awaited<ReturnType<ApiService['getUsers']>>;
