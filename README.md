@@ -16,7 +16,20 @@ To get started with this repository, clone it to your local machine and install 
 ```bash
 git clone https://github.com/yourusername/typescript-revisit.git
 cd typescript-revisit
+```
+
+## Install
+
+**NPM**
+
+```bash
 npm install
+```
+
+**OR Yarn**
+
+```bash
+yarn
 ```
 
 ## Contributing
